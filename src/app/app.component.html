@@ -1,8 +1,9 @@
-<main *ngIf="!showLoginForm" class="welcome-container">
+<router-outlet></router-outlet>
+<main *ngIf="welcomeVisible" class="welcome-container">
   <h1>Welcome to Our App!</h1>
   <p>This is a short description or introduction of the app.</p>
-  <button (click)="toggleLoginForm()">Go to Login</button>
+  <button (click)="getAuth()">Go to Login</button>
 </main>
-
-<button *ngIf="showLoginForm" (click)="toggleLoginForm()">Go Back</button>
-<login-form *ngIf="showLoginForm" class="login-form"></login-form>
+<div *ngIf="!welcomeVisible">
+  <h1>Tables here...</h1>
+</div>
