@@ -307,6 +307,7 @@ hr {
   justify-content: center;
   animation: fadeIn 0.3s ease;
   z-index: 1000;
+  overflow: hidden; /* Prevents body overflow */
 }
 
 @keyframes fadeIn {
@@ -329,6 +330,9 @@ hr {
   font-family: Arial, sans-serif;
   color: #333;
   animation: slideIn 0.3s ease;
+  max-height: 80vh; /* Constrains modal height */
+  overflow-y: auto; /* Enables vertical scrolling */
+
 }
 
 @keyframes slideIn {
@@ -382,6 +386,24 @@ hr {
 }
 
 .form-input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Selector styling for select elements */
+.form-select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1em;
+  color: #333;
+  background-color: #fff;
+  transition: border-color 0.3s;
+  appearance: none; /* Removes default arrow for a custom look */
+}
+
+.form-select:focus {
   border-color: #007bff;
   outline: none;
 }

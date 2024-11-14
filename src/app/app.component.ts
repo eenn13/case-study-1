@@ -53,8 +53,8 @@ export class AppComponent {
 
 
   isCompanyEditModalOpen = false;
+  isEmployeeEditModalOpen = false;
 
-  
 
   toggleCompanyForm() {
     this.isCompanyFormVisible = !this.isCompanyFormVisible;
@@ -133,6 +133,7 @@ export class AppComponent {
       console.error('Failed to update company');
     });
   }
+  
 
   getCompanies() {
     this.indexedDBService.getAllCompanies().then((companies) => {
@@ -172,6 +173,26 @@ export class AppComponent {
     this.indexedDBService.deleteEmployee(employeeId).then(() => {
       console.log('Employee deleted');
       this.getEmployees();
+    });
+  }
+
+  openEditEmployeeModal(employee: any) {
+    this.selectedEmployee = { ...employee }; // Make a copy to avoid directly modifying the list
+    this.isEmployeeEditModalOpen = true;
+  }
+
+  closeEditEmployeeModal() {
+    this.isEmployeeEditModalOpen = false;
+    this.selectedEmployee = null;
+  }
+
+  saveEmployeeEdits() {
+    this.indexedDBService.updateEmployee(this.selectedEmployee).then(() => {
+      console.log('Employee updated');
+      this.getEmployees();
+      this.closeEditEmployeeModal();
+    }).catch(() => {
+      console.error('Failed to update employee');
     });
   }
 

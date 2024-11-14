@@ -119,6 +119,10 @@
                   class="fas fa-info-circle info-icon"
                 ></i>
                 <i
+                  (click)="openEditEmployeeModal(employee)"
+                  class="fas fa-edit edit-icon"
+                ></i>
+                <i
                   (click)="deleteEmployee(employee.id)"
                   class="fas fa-trash-alt delete-icon"
                 ></i>
@@ -262,42 +266,149 @@
 <!-- Edit modal -->
 <div *ngIf="isCompanyEditModalOpen" class="edit-modal">
   <div class="edit-modal-content">
-    <span class="edit-close-button" (click)="closeCompanyEditModal()">&times;</span>
+    <span class="edit-close-button" (click)="closeCompanyEditModal()"
+      >&times;</span
+    >
     <h3 class="edit-modal-title">Edit Company</h3>
     <form (ngSubmit)="saveCompanyEdits()">
       <div class="form-group">
         <label for="editName">Name:</label>
-        <input id="editName" [(ngModel)]="selectedCompany.name" name="name" class="form-input" />
+        <input
+          id="editName"
+          [(ngModel)]="selectedCompany.name"
+          name="name"
+          class="form-input"
+        />
       </div>
 
       <div class="form-group">
         <label for="editAddress">Address:</label>
-        <input id="editAddress" [(ngModel)]="selectedCompany.address" name="address" class="form-input" />
+        <input
+          id="editAddress"
+          [(ngModel)]="selectedCompany.address"
+          name="address"
+          class="form-input"
+        />
       </div>
 
       <div class="form-group">
         <label for="editPhone">Phone:</label>
-        <input id="editPhone" [(ngModel)]="selectedCompany.phoneNumber" name="phone" class="form-input" />
+        <input
+          id="editPhone"
+          [(ngModel)]="selectedCompany.phoneNumber"
+          name="phone"
+          class="form-input"
+        />
       </div>
 
       <div class="form-group">
         <label for="editEmail">Email:</label>
-        <input id="editEmail" [(ngModel)]="selectedCompany.email" name="email" class="form-input" />
+        <input
+          id="editEmail"
+          [(ngModel)]="selectedCompany.email"
+          name="email"
+          class="form-input"
+        />
       </div>
 
       <div class="form-group">
         <label for="editWebsite">Website:</label>
-        <input id="editWebsite" [(ngModel)]="selectedCompany.website" name="website" class="form-input" />
+        <input
+          id="editWebsite"
+          [(ngModel)]="selectedCompany.website"
+          name="website"
+          class="form-input"
+        />
       </div>
 
       <div class="form-group">
         <label for="editIndustry">Industry:</label>
-        <input id="editIndustry" [(ngModel)]="selectedCompany.industry" name="industry" class="form-input" />
+        <input
+          id="editIndustry"
+          [(ngModel)]="selectedCompany.industry"
+          name="industry"
+          class="form-input"
+        />
       </div>
 
       <div class="form-group">
         <label for="editEmployeeCount">Employee Count:</label>
-        <input id="editEmployeeCount" [(ngModel)]="selectedCompany.employeeCount" name="employeeCount" class="form-input" />
+        <input
+          id="editEmployeeCount"
+          [(ngModel)]="selectedCompany.employeeCount"
+          name="employeeCount"
+          class="form-input"
+        />
+      </div>
+
+      <button type="submit" class="edit-save-button">Save Changes</button>
+    </form>
+  </div>
+</div>
+
+
+<div *ngIf="isEmployeeEditModalOpen" class="edit-modal">
+  <div class="edit-modal-content">
+    <span class="edit-close-button" (click)="closeEditEmployeeModal()">&times;</span>
+    <h3 class="edit-modal-title">Edit Employee</h3>
+    <form (ngSubmit)="saveEmployeeEdits()">
+      <!-- <div class="form-group">
+        <label for="editEmployeeCompany">Company:</label>
+        <select id="editEmployeeCompany" [(ngModel)]="selectedEmployee.company_id" class="form-select">
+          <option [ngValue]="0" disabled>Please select a company</option>
+          <option *ngFor="let company of companies" [ngValue]="company.id">
+            {{ company.name }}
+          </option>
+        </select>
+      </div> -->
+      <div class="form-group">
+        <label for="editEmployeeName">Name:</label>
+        <input id="editEmployeeName" [(ngModel)]="selectedEmployee.name" name="name" class="form-input" />
+      </div>
+
+      <div class="form-group">
+        <label for="editEmployeeTitle">Title:</label>
+        <input id="editEmployeeTitle" [(ngModel)]="selectedEmployee.title" name="title" class="form-input" />
+      </div>
+
+      <div class="form-group">
+        <label for="editEmployeeEmail">Email:</label>
+        <input id="editEmployeeEmail" [(ngModel)]="selectedEmployee.email" name="email" class="form-input" />
+      </div>
+
+      <div class="form-group">
+        <label for="editEmployeePhone">Phone:</label>
+        <input id="editEmployeePhone" [(ngModel)]="selectedEmployee.phone" name="phone" class="form-input" />
+      </div>
+
+      <div class="form-group">
+        <label for="editEmployeeAge">Age:</label>
+        <input id="editEmployeeAge" [(ngModel)]="selectedEmployee.age" name="age" class="form-input" />
+      </div>
+
+      <div class="form-group">
+        <label for="editEmployeeSalary">Salary:</label>
+        <input id="editEmployeeSalary" [(ngModel)]="selectedEmployee.salary" name="salary" class="form-input" />
+      </div>
+
+      <div class="form-group">
+        <label for="editEmployeeDepartment">Department:</label>
+        <input id="editEmployeeDepartment" [(ngModel)]="selectedEmployee.department" name="department" class="form-input" />
+      </div>
+
+      <div class="form-group">
+        <label for="editEmployeePosition">Position:</label>
+        <input id="editEmployeePosition" [(ngModel)]="selectedEmployee.position" name="position" class="form-input" />
+      </div>
+
+      <div class="form-group">
+        <label for="editEmployeeHireDate">Hire Date:</label>
+        <input type="date" id="editEmployeeHireDate" [(ngModel)]="selectedEmployee.hireDate" name="hireDate" class="form-input" />
+      </div>
+
+      <div class="form-group">
+        <label for="editEmployeeIsWorking">Is Working:</label>
+        <input type="checkbox" id="editEmployeeIsWorking" [(ngModel)]="selectedEmployee.isWorking" name="isWorking" class="form-input" />
       </div>
 
       <button type="submit" class="edit-save-button">Save Changes</button>
