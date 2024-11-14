@@ -158,24 +158,38 @@ button:active {
   gap: 8px; /* Adds space between icons */
 }
 
-.info-icon {
-  font-size: 18px; /* Adjust size as needed */
+.info-icon,
+.edit-icon,
+.delete-icon {
+  cursor: pointer;
+  font-size: 18px;
+  transition: color 0.3s;
+  cursor: pointer;
+}
+
+
+/* .info-icon {
+  font-size: 18px; 
   margin-left: 8px;
-  color: #007bff; /* A pleasant blue color */
+  color: #007bff;
   cursor: pointer;
   transition: color 0.3s;
-}
+} */
 
 .info-icon:hover {
   color: #0056b3; /* Darker blue for hover */
 }
 
-.delete-icon {
+.edit-icon:hover {
+  color: #7c5f06;
+}
+
+/* .delete-icon {
   margin-left: 8px;
   cursor: pointer;
   font-size: 16px;
   transition: color 0.3s;
-}
+} */
 
 .delete-icon:hover {
   color: #b02a37;
@@ -279,6 +293,115 @@ hr {
   color: #555;
 }
 /*Modal*/
+
+
+.edit-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease;
+  z-index: 1000;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.edit-modal-content {
+  background-color: #ffffff;
+  padding: 30px 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 500px;
+  position: relative;
+  font-family: Arial, sans-serif;
+  color: #333;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-20px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.edit-close-button {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 24px;
+  color: #888;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.edit-close-button:hover {
+  color: #555;
+}
+
+.edit-modal-title {
+  margin-bottom: 20px;
+  font-size: 1.5em;
+  color: #333;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1em;
+  transition: border-color 0.3s;
+}
+
+.form-input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.edit-save-button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 20px;
+}
+
+.edit-save-button:hover {
+  background-color: #0056b3;
+}
 
 
 .action-button {

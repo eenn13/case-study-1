@@ -86,7 +86,7 @@ export class IndexedDBService {
     });
   }
   
-  updateCompany(company: { id: number; name: string; address: string, tel: string }): Promise<void> {
+  updateCompany(company: Company): Promise<void> {
     return new Promise((resolve, reject) => {
       const store = this.getObjectStore('companies', 'readwrite');
       const request = store.put(company);

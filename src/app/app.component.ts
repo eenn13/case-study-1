@@ -51,6 +51,11 @@ export class AppComponent {
     isWorking: false,
   } as Employee;
 
+
+  isCompanyEditModalOpen = false;
+
+  
+
   toggleCompanyForm() {
     this.isCompanyFormVisible = !this.isCompanyFormVisible;
   }
@@ -106,6 +111,26 @@ export class AppComponent {
     this.indexedDBService.deleteCompany(companyId).then(() => {
       console.log('Company deleted');
       this.getCompanies();
+    });
+  }
+
+  openCompanyEditModal(company: any) {
+    this.selectedCompany = { ...company }; // Make a copy to avoid directly modifying the list
+    this.isCompanyEditModalOpen = true;
+  }
+
+  closeCompanyEditModal() {
+    this.isCompanyEditModalOpen = false;
+    this.selectedCompany = null;
+  }
+
+  saveCompanyEdits() {
+    this.indexedDBService.updateCompany(this.selectedCompany).then(() => {
+      console.log('Company updated');
+      this.getCompanies();
+      this.closeCompanyEditModal();
+    }).catch(() => {
+      console.error('Failed to update company');
     });
   }
 
