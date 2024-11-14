@@ -6,11 +6,12 @@ import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { IndexedDBService } from './indexeddb.service';
 import { Company } from './models/company.model';
 import { Employee } from './models/employee.model';
+import { FormsModule } from '@angular/forms'
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule],
+  imports: [RouterOutlet, CommonModule, FormsModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -21,6 +22,38 @@ export class AppComponent {
   companies: Company[] = [];
   employees: Employee[] = [];
   expandedCompany: number | null = null;
+  isModalOpen = false;
+  selectedCompany: any = null;
+
+  isCompanyFormVisible = false;
+  companyForm: Company = {
+    name: '',
+    address: '',
+    phoneNumber: '',
+    email: '',
+    website: '',
+    industry: '',
+    employeeCount: 0,
+  } as Company;
+
+  isEmployeeFormVisible = false;
+  employeeForm: Employee = {
+    name: '',
+    company_id: 0,
+    age: 0,
+    title: '',
+    email: '',
+    phone: '',
+    salary: 0,
+    department: '',
+    position: '',
+    hireDate: '',
+    isWorking: false,
+  } as Employee;
+
+  toggleCompanyForm() {
+    this.isCompanyFormVisible = !this.isCompanyFormVisible;
+  }
 
   ngOnInit() {
     this.authService.authCode$.subscribe((isAuthenticated) => {
@@ -51,12 +84,27 @@ export class AppComponent {
   }
 
   addCompany() {
-    this.indexedDBService.addCompany({
-      id: 0,
-      name: '',
-      address: ''
-    }).then(() => {
+    const companyObj = {
+      name: this.companyForm.name,
+      address: this.companyForm.address,
+      phoneNumber: this.companyForm.phoneNumber,
+      email: this.companyForm.email,
+      website: this.companyForm.website,
+      industry: this.companyForm.industry,
+      employeeCount: this.companyForm.employeeCount,
+    };
+    if(!companyObj.name || !companyObj.phoneNumber || !companyObj.email) {
+      return;
+    }
+    this.indexedDBService.addCompany(companyObj).then(() => {
       console.log('Company added');
+      this.getCompanies();
+    });
+  }
+
+  deleteCompany(companyId: number) {
+    this.indexedDBService.deleteCompany(companyId).then(() => {
+      console.log('Company deleted');
       this.getCompanies();
     });
   }
@@ -68,13 +116,36 @@ export class AppComponent {
     });
   }
 
+  toggleEmployeeForm() {
+    this.isEmployeeFormVisible = !this.isEmployeeFormVisible;
+  }
+
   addEmployee() {
-    this.indexedDBService.addEmployee({
-      id: 0,
-      name: '',
-      company_id: 0
-    }).then(() => {
+    const employeeObj = {
+      name: this.employeeForm.name,
+      company_id: this.employeeForm.company_id,
+      title: this.employeeForm.title,
+      email: this.employeeForm.email,
+      age: this.employeeForm.age,
+      phone: this.employeeForm.phone,
+      salary: this.employeeForm.salary,
+      department: this.employeeForm.department,
+      position: this.employeeForm.position,
+      hireDate: this.employeeForm.hireDate,
+      isWorking: this.employeeForm.isWorking,
+    }
+    if(!employeeObj.name || !employeeObj.email || !employeeObj.company_id) {
+      return;
+    }
+    this.indexedDBService.addEmployee(employeeObj).then(() => {
       console.log('Employee added');
+      this.getEmployees();
+    });
+  }
+
+  deleteEmployee(employeeId: number) {
+    this.indexedDBService.deleteEmployee(employeeId).then(() => {
+      console.log('Employee deleted');
       this.getEmployees();
     });
   }
@@ -91,6 +162,30 @@ export class AppComponent {
   }
 
   getEmployeesByCompany(companyId: number) {
-    return this.employees.filter(employee => employee.company_id === companyId);
+    const selectedEmployees = this.employees.filter(employee => employee.company_id === companyId);
+    return selectedEmployees;
+  }
+
+  openCompanyModal(company: Company) {
+    this.selectedCompany = company;
+    this.isModalOpen = true;
+  }
+
+  closeCompanyModal() {
+    this.isModalOpen = false;
+    this.selectedCompany = null;
+  }
+
+  isEmployeeModalOpen = false;
+  selectedEmployee: any = null;
+
+  openEmployeeDetails(employee: any) {
+    this.selectedEmployee = employee;
+    this.isEmployeeModalOpen = true;
+  }
+
+  closeEmployeeModal() {
+    this.isEmployeeModalOpen = false;
+    this.selectedEmployee = null;
   }
 }

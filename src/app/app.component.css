@@ -87,10 +87,10 @@ button:active {
 .content {
   height: 100vh;
   min-height: 100vh;
+  overflow: auto;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  overflow: auto;
 }
 
 .manager-div {
@@ -102,12 +102,199 @@ button:active {
   padding: 50px;
 }
 
+.company-form {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.company-form label {
+  color: #badcf5;
+  margin-top: 10px;
+}
+
+.company-form input {
+  padding: 8px;
+  margin-top: 5px;
+  box-sizing: border-box;
+}
+
+.employee-form {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.employee-form label {
+  color: #badcf5;
+  margin-top: 10px;
+}
+
+.employee-form input {
+  padding: 8px;
+  margin-top: 5px;
+  box-sizing: border-box;
+}
+
+.employee-form select {
+  padding: 8px;
+  margin-top: 5px;
+  box-sizing: border-box;
+}
+
+/* Company modal css */
+.company-section {
+  position: relative;
+}
+
+.company-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-icons {
+  display: flex;
+  gap: 8px; /* Adds space between icons */
+}
+
+.info-icon {
+  font-size: 18px; /* Adjust size as needed */
+  margin-left: 8px;
+  color: #007bff; /* A pleasant blue color */
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.info-icon:hover {
+  color: #0056b3; /* Darker blue for hover */
+}
+
+.delete-icon {
+  margin-left: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: color 0.3s;
+}
+
+.delete-icon:hover {
+  color: #b02a37;
+}
+
+
+.employee-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+.employee-details {
+  flex-grow: 1;
+}
+
+.employee-icons {
+  display: flex;
+  gap: 8px; /* Adds space between icons */
+}
+
+.info-icon,
+.delete-icon {
+  cursor: pointer;
+  font-size: 16px;
+  transition: color 0.3s;
+}
+
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease;
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Modal */
+.modal-content {
+  background-color: #a6d6ff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 500px;
+  position: relative;
+  font-family: Arial, sans-serif;
+  color: #333;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-20px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.modal-details p {
+  margin: 8px 0;
+  line-height: 1.5;
+}
+
+hr {
+  border: none;
+  height: 1px;
+  background-color: #ddd;
+  margin: 15px 0;
+}
+
+.close-button {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  cursor: pointer;
+  font-size: 20px;
+  color: #888;
+  transition: color 0.3s;
+}
+
+.close-button:hover {
+  color: #555;
+}
+/*Modal*/
+
+
+.action-button {
+  margin-top: 10px;
+}
+
 .data-div {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   width: 30%;
   box-sizing: border-box;
+  border: 1px solid #256999;
+  height: 100vh;
+  min-height: 100vh;
+  overflow: auto;
 }
 /* .buttons-container {
   display: flex;
@@ -156,6 +343,10 @@ button:active {
 }
 
 .company-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-family: math;
   font-size: 18px;
   font-weight: bold;
   cursor: pointer;
@@ -165,6 +356,13 @@ button:active {
   border-radius: 5px;
   border: 1px solid black;
 }
+
+/*
+.employee-list li {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+*/
 
 .employee-list {
   margin-left: 20px;
@@ -181,6 +379,9 @@ button:active {
 .employee-list li {
   padding: 8px;
   border-bottom: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .employee-list li:last-child {
