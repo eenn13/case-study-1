@@ -17,15 +17,15 @@ import { FormsModule } from '@angular/forms'
 })
 export class AppComponent {
   constructor(private authService: AuthService, private indexedDBService: IndexedDBService) {}
-  title = 'case-study-1';
-  welcomeVisible: boolean = false;
-  companies: Company[] = [];
-  employees: Employee[] = [];
-  expandedCompany: number | null = null;
-  isModalOpen = false;
-  selectedCompany: any = null;
 
-  isCompanyFormVisible = false;
+  //REGION: Properties
+  //Home page visibility
+  welcomeVisible: boolean = false;
+
+  //Company data
+  companies: Company[] = []; //List of companies
+  expandedCompany: number | null = null; //View company employees
+  isCompanyFormVisible = false; //Company form visibility
   companyForm: Company = {
     name: '',
     address: '',
@@ -34,9 +34,15 @@ export class AppComponent {
     website: '',
     industry: '',
     employeeCount: 0,
-  } as Company;
+  } as Company; //Company form data to add company
+  
+  //Company modal openers
+  isCompanyEditModalOpen = false; //Company edit modal visibility
+  isCompanyModalOpen = false; //Modal opener for read or edit company
+  selectedCompany: any = null; //Selected company for modal
 
-  isEmployeeFormVisible = false;
+  employees: Employee[] = []; //List of employees
+  isEmployeeFormVisible = false; //Employee form visibility
   employeeForm: Employee = {
     name: '',
     company_id: 0,
@@ -49,22 +55,33 @@ export class AppComponent {
     position: '',
     hireDate: '',
     isWorking: false,
-  } as Employee;
+  } as Employee; //Employee form data to add employee
 
+  //Employee modal openers
+  isEmployeeEditModalOpen = false; //Employee edit modal visibility
+  isEmployeeModalOpen = false;    //Modal opener for read or edit employee
+  selectedEmployee: any = null;   //Selected employee for modal
+  //ENDREGION
 
-  isCompanyEditModalOpen = false;
-  isEmployeeEditModalOpen = false;
+  async getAuth() { //Get authentication
+    // Comment out if you don't want to use cookies
 
-
-  toggleCompanyForm() {
-    this.isCompanyFormVisible = !this.isCompanyFormVisible;
+    /* Check if authentication is already provided */
+    // let myCookie = Cookie.get('authProvided');
+    // if (myCookie == 'true') {
+    //   this.welcomeVisible = false;
+    //   this.authService.setAuthCode("already provided");
+    //   return
+    // }
+    await this.authService.loginWithGoogle();
   }
 
-  ngOnInit() {
+  ngOnInit() { //Listen for authentication
     this.authService.authCode$.subscribe((isAuthenticated) => {
       this.welcomeVisible = !isAuthenticated;
-  
+
       if (isAuthenticated) {
+         //Authentication provided, open IndexedDB and get data if authenticated
         this.indexedDBService.openDB()
           .then(() => {
             this.getCompanies();
@@ -76,16 +93,13 @@ export class AppComponent {
       }
     });
   }
-  
 
-  async getAuth() {
-    let myCookie = Cookie.get('authProvided');
-    if (myCookie == 'true') {
-      this.welcomeVisible = false;
-      this.authService.setAuthCode("already provided");
-      return
-    }
-    await this.authService.loginWithGoogle();
+  //Region: Company
+  getCompanies() {
+    this.indexedDBService.getAllCompanies().then((companies) => {
+      this.companies = companies;
+      console.log('Companies:', companies);
+    });
   }
 
   addCompany() {
@@ -106,22 +120,15 @@ export class AppComponent {
       this.getCompanies();
     });
   }
+  toggleCompanyForm() { //Toggle company form visibility for adding company
+    this.isCompanyFormVisible = !this.isCompanyFormVisible;
+  }
 
   deleteCompany(companyId: number) {
     this.indexedDBService.deleteCompany(companyId).then(() => {
       console.log('Company deleted');
       this.getCompanies();
     });
-  }
-
-  openCompanyEditModal(company: any) {
-    this.selectedCompany = { ...company }; // Make a copy to avoid directly modifying the list
-    this.isCompanyEditModalOpen = true;
-  }
-
-  closeCompanyEditModal() {
-    this.isCompanyEditModalOpen = false;
-    this.selectedCompany = null;
   }
 
   saveCompanyEdits() {
@@ -133,17 +140,36 @@ export class AppComponent {
       console.error('Failed to update company');
     });
   }
-  
-
-  getCompanies() {
-    this.indexedDBService.getAllCompanies().then((companies) => {
-      this.companies = companies;
-      console.log('Companies:', companies);
-    });
+  openCompanyEditModal(company: any) {
+    this.selectedCompany = { ...company };
+    this.isCompanyEditModalOpen = true;
+  }
+  closeCompanyEditModal() {
+    this.isCompanyEditModalOpen = false;
+    this.selectedCompany = null;
   }
 
-  toggleEmployeeForm() {
-    this.isEmployeeFormVisible = !this.isEmployeeFormVisible;
+  openCompanyModal(company: Company) { //Open company modal for read
+    this.selectedCompany = company;
+    this.isCompanyModalOpen = true;
+  }
+  closeCompanyModal() {
+    this.isCompanyModalOpen = false;
+    this.selectedCompany = null;
+  }
+
+  toggleCompany(companyId: number) { //Toggle company employees visibility
+    this.expandedCompany = this.expandedCompany === companyId ? null : companyId;
+  }
+  //EndRegion
+
+
+  //Region: Employee
+  getEmployees() {
+    this.indexedDBService.getAllEmployees().then((employees) => {
+      this.employees = employees;
+      console.log('Employees:', employees);
+    });
   }
 
   addEmployee() {
@@ -168,22 +194,15 @@ export class AppComponent {
       this.getEmployees();
     });
   }
+  toggleEmployeeForm() { //Toggle employee form visibility for adding employee
+    this.isEmployeeFormVisible = !this.isEmployeeFormVisible;
+  }
 
   deleteEmployee(employeeId: number) {
     this.indexedDBService.deleteEmployee(employeeId).then(() => {
       console.log('Employee deleted');
       this.getEmployees();
     });
-  }
-
-  openEditEmployeeModal(employee: any) {
-    this.selectedEmployee = { ...employee }; // Make a copy to avoid directly modifying the list
-    this.isEmployeeEditModalOpen = true;
-  }
-
-  closeEditEmployeeModal() {
-    this.isEmployeeEditModalOpen = false;
-    this.selectedEmployee = null;
   }
 
   saveEmployeeEdits() {
@@ -195,43 +214,26 @@ export class AppComponent {
       console.error('Failed to update employee');
     });
   }
-
-  getEmployees() {
-    this.indexedDBService.getAllEmployees().then((employees) => {
-      this.employees = employees;
-      console.log('Employees:', employees);
-    });
+  openEditEmployeeModal(employee: any) {
+    this.selectedEmployee = { ...employee }; // Make a copy to avoid directly modifying the list
+    this.isEmployeeEditModalOpen = true;
+  }
+  closeEditEmployeeModal() {
+    this.isEmployeeEditModalOpen = false;
+    this.selectedEmployee = null;
   }
 
-  toggleCompany(companyId: number) {
-    this.expandedCompany = this.expandedCompany === companyId ? null : companyId;
-  }
-
-  getEmployeesByCompany(companyId: number) {
+  getEmployeesByCompany(companyId: number) { //Get employees by company for display
     const selectedEmployees = this.employees.filter(employee => employee.company_id === companyId);
     return selectedEmployees;
   }
-
-  openCompanyModal(company: Company) {
-    this.selectedCompany = company;
-    this.isModalOpen = true;
-  }
-
-  closeCompanyModal() {
-    this.isModalOpen = false;
-    this.selectedCompany = null;
-  }
-
-  isEmployeeModalOpen = false;
-  selectedEmployee: any = null;
-
   openEmployeeDetails(employee: any) {
     this.selectedEmployee = employee;
     this.isEmployeeModalOpen = true;
   }
-
   closeEmployeeModal() {
     this.isEmployeeModalOpen = false;
     this.selectedEmployee = null;
   }
+  //EndRegion
 }

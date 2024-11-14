@@ -1,13 +1,18 @@
 <div class="container">
+  <!-- Router outlet is necessary for rendering auth-callback component after authentication -->
   <router-outlet></router-outlet>
 
+  <!-- Welcome Screen -->
   <main *ngIf="welcomeVisible" class="welcome-container">
-    <button (click)="getAuth()">Uygulamaya erişin</button>
+    <button (click)="getAuth()">Access to application</button>
   </main>
 
+  <!-- Application Screen -->
   <div *ngIf="!welcomeVisible" class="content">
+    <!-- 3 main area are exists here-->
+    <!-- 1. Adding company area -->
     <div class="manager-div">
-      <!-- Collapsible form -->
+      <!-- Collapsible form for adding company-->
       <div *ngIf="isCompanyFormVisible" class="company-form">
         <label for="companyName">Company Name:</label>
         <input
@@ -66,21 +71,17 @@
       </div>
       <!-- Toggle button for collapsible form -->
       <button (click)="toggleCompanyForm()" class="action-button">
-        {{ isCompanyFormVisible ? "Hide Form" : "Enter Details" }}
+        {{ isCompanyFormVisible ? "Hide Form" : "Enter Company Details" }}
       </button>
       <button (click)="addCompany()" class="action-button">Add Company</button>
     </div>
+    <!-- 2. Company and Employee list area --> 
     <div class="data-div">
+      <!-- Iterate over companies -->
       <div *ngFor="let company of companies" class="company-section">
-        <!-- <h2 (click)="toggleCompany(company.id)" class="company-header">
-          {{ company.name }}
-          <i
-            (click)="openCompanyModal(company); $event.stopPropagation()"
-            class="fas fa-info-circle info-icon"
-          ></i>
-        </h2> -->
         <h2 (click)="toggleCompany(company.id)" class="company-header">
           {{ company.name }}
+          <!--Read - Update - Delete elements for company-->
           <span class="header-icons">
             <i
               (click)="openCompanyModal(company); $event.stopPropagation()"
@@ -96,7 +97,7 @@
             ></i>
           </span>
         </h2>
-
+        <!-- Iterate over employees of the company -->
         <div
           *ngIf="
             expandedCompany === company.id &&
@@ -113,6 +114,7 @@
                 {{ employee.name }} - {{ employee.title }} -
                 {{ employee.email }}
               </span>
+              <!--Read - Update - Delete elements for employee-->
               <span class="employee-icons">
                 <i
                   (click)="openEmployeeDetails(employee)"
@@ -132,7 +134,9 @@
         </div>
       </div>
     </div>
+    <!-- 3. Adding employee area -->
     <div class="manager-div">
+      <!-- Collapsible form for adding employee-->
       <div *ngIf="isEmployeeFormVisible" class="employee-form">
         <label for="employeeName">Employee Name:</label>
         <input
@@ -214,7 +218,7 @@
       </div>
       <!-- Toggle button for collapsible form -->
       <button (click)="toggleEmployeeForm()" class="action-button">
-        {{ isEmployeeFormVisible ? "Hide Form" : "Enter Details" }}
+        {{ isEmployeeFormVisible ? "Hide Form" : "Enter Employee Details" }}
       </button>
       <button (click)="addEmployee()" class="action-button">
         Add Employee
@@ -224,8 +228,8 @@
   </div>
 </div>
 
-<!-- Modal structure -->
-<div *ngIf="isModalOpen" class="modal">
+<!-- Company details modal for read -->
+<div *ngIf="isCompanyModalOpen" class="modal">
   <div class="modal-content">
     <span class="close-button" (click)="closeCompanyModal()">&times;</span>
     <h3>{{ selectedCompany?.name }} Details</h3>
@@ -244,7 +248,7 @@
   </div>
 </div>
 
-<!-- Employee details modal -->
+<!-- Employee details modal for read -->
 <div *ngIf="isEmployeeModalOpen" class="modal">
   <div class="modal-content">
     <span class="close-button" (click)="closeEmployeeModal()">&times;</span>
@@ -263,7 +267,7 @@
   </div>
 </div>
 
-<!-- Edit modal -->
+<!-- Company Edit modal -->
 <div *ngIf="isCompanyEditModalOpen" class="edit-modal">
   <div class="edit-modal-content">
     <span class="edit-close-button" (click)="closeCompanyEditModal()"
@@ -346,7 +350,7 @@
   </div>
 </div>
 
-
+<!-- Employee Edit modal -->
 <div *ngIf="isEmployeeEditModalOpen" class="edit-modal">
   <div class="edit-modal-content">
     <span class="edit-close-button" (click)="closeEditEmployeeModal()">&times;</span>
