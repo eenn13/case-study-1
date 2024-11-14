@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from './auth.service';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { IndexedDBService } from './indexeddb.service';
+import { Company } from './models/company.model';
+import { Employee } from './models/employee.model';
 
 @Component({
   selector: 'app-root',
@@ -16,8 +18,9 @@ export class AppComponent {
   constructor(private authService: AuthService, private indexedDBService: IndexedDBService) {}
   title = 'case-study-1';
   welcomeVisible: boolean = false;
-  companies: any[] = [];
-  employees: any[] = [];
+  companies: Company[] = [];
+  employees: Employee[] = [];
+  expandedCompany: number | null = null;
 
   ngOnInit() {
     this.authService.authCode$.subscribe((isAuthenticated) => {
@@ -48,8 +51,13 @@ export class AppComponent {
   }
 
   addCompany() {
-    this.indexedDBService.addCompany({ name: 'companyx', address: "izmir buca", tel:"+90538" }).then(() => {
+    this.indexedDBService.addCompany({
+      id: 0,
+      name: '',
+      address: ''
+    }).then(() => {
       console.log('Company added');
+      this.getCompanies();
     });
   }
 
@@ -61,8 +69,13 @@ export class AppComponent {
   }
 
   addEmployee() {
-    this.indexedDBService.addEmployee({ name: 'employee1', company_id: 1 }).then(() => {
+    this.indexedDBService.addEmployee({
+      id: 0,
+      name: '',
+      company_id: 0
+    }).then(() => {
       console.log('Employee added');
+      this.getEmployees();
     });
   }
 
@@ -71,5 +84,13 @@ export class AppComponent {
       this.employees = employees;
       console.log('Employees:', employees);
     });
+  }
+
+  toggleCompany(companyId: number) {
+    this.expandedCompany = this.expandedCompany === companyId ? null : companyId;
+  }
+
+  getEmployeesByCompany(companyId: number) {
+    return this.employees.filter(employee => employee.company_id === companyId);
   }
 }

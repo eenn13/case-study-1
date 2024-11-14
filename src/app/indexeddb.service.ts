@@ -1,5 +1,7 @@
 // indexeddb.service.ts
 import { Injectable } from '@angular/core';
+import { Company } from './models/company.model';
+import { Employee } from './models/employee.model';
 
 @Injectable({
   providedIn: 'root',
@@ -51,7 +53,7 @@ export class IndexedDBService {
     return transaction.objectStore(storeName);
   }
 
-  addCompany(company: { name: string; address: string, tel: string }): Promise<void> {
+  addCompany(company: Company): Promise<void> {
     return new Promise((resolve, reject) => {
       const store = this.getObjectStore('companies', 'readwrite');
       const request = store.add(company);
@@ -118,7 +120,7 @@ export class IndexedDBService {
     });
   }
 
-  addEmployee(employee: { name: string; company_id: number }): Promise<void> {
+  addEmployee(employee: Employee): Promise<void> {
     return new Promise((resolve, reject) => {
       const store = this.getObjectStore('employees', 'readwrite');
       const request = store.add(employee);

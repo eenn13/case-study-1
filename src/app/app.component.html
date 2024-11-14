@@ -2,35 +2,24 @@
   <router-outlet></router-outlet>
 
   <main *ngIf="welcomeVisible" class="welcome-container">
-    <h1>Welcome to Our App!</h1>
-    <p>This is a short description or introduction of the app.</p>
-    <button (click)="getAuth()">Go to Login</button>
+    <button (click)="getAuth()">Uygulamaya erişin</button>
   </main>
 
   <div *ngIf="!welcomeVisible" class="content">
-    <div class="section">
-      <button (click)="addCompany()">Add Company</button>
-      <button (click)="getCompanies()">Get Companies</button>
-
-      <div class="list">
-        <h2>Company List</h2>
-        <ul>
-          <li *ngFor="let company of companies">
-            ID: {{ company.id }} - Name: {{ company.name }} - Address: {{ company.address }}
-          </li>
-        </ul>
-      </div>
+    <div class="buttons-container">
+      <button (click)="addCompany()" class="action-button">Add Company</button>
+      <!-- <button (click)="getCompanies()" class="action-button">Get Companies</button> -->
+      <button (click)="addEmployee()" class="action-button">Add Employee</button>
+      <!-- <button (click)="getEmployees()" class="action-button">Get Employees</button> -->
     </div>
-
-    <div class="section">
-      <button (click)="addEmployee()">Add Employee</button>
-      <button (click)="getEmployees()">Get Employees</button>
-
-      <div class="list">
-        <h2>Employee List</h2>
+    <div *ngFor="let company of companies" class="company-section">
+      <h2 (click)="toggleCompany(company.id)" class="company-header">
+        {{ company.name }} (ID: {{ company.id }})
+      </h2>
+      <div *ngIf="expandedCompany === company.id" class="employee-list">
         <ul>
-          <li *ngFor="let employee of employees">
-            ID: {{ employee.id }} - Name: {{ employee.name }} - Company: {{ employee.company_id }}
+          <li *ngFor="let employee of getEmployeesByCompany(company.id)">
+            ID: {{ employee.id }} - Name: {{ employee.name }}
           </li>
         </ul>
       </div>
