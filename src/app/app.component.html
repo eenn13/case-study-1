@@ -6,23 +6,27 @@
   </main>
 
   <div *ngIf="!welcomeVisible" class="content">
-    <div class="buttons-container">
+    <div class="manager-div">
       <button (click)="addCompany()" class="action-button">Add Company</button>
       <!-- <button (click)="getCompanies()" class="action-button">Get Companies</button> -->
+    </div>
+    <div class="data-div">
+      <div *ngFor="let company of companies" class="company-section">
+        <h2 (click)="toggleCompany(company.id)" class="company-header">
+          {{ company.name }} (ID: {{ company.id }})
+        </h2>
+        <div *ngIf="expandedCompany === company.id" class="employee-list">
+          <ul>
+            <li *ngFor="let employee of getEmployeesByCompany(company.id)">
+              ID: {{ employee.id }} - Name: {{ employee.name }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="manager-div">
       <button (click)="addEmployee()" class="action-button">Add Employee</button>
       <!-- <button (click)="getEmployees()" class="action-button">Get Employees</button> -->
-    </div>
-    <div *ngFor="let company of companies" class="company-section">
-      <h2 (click)="toggleCompany(company.id)" class="company-header">
-        {{ company.name }} (ID: {{ company.id }})
-      </h2>
-      <div *ngIf="expandedCompany === company.id" class="employee-list">
-        <ul>
-          <li *ngFor="let employee of getEmployeesByCompany(company.id)">
-            ID: {{ employee.id }} - Name: {{ employee.name }}
-          </li>
-        </ul>
-      </div>
     </div>
   </div>
 </div>
