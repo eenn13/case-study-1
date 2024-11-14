@@ -1,4 +1,3 @@
-// indexeddb.service.ts
 import { Injectable } from '@angular/core';
 import { Company, CompanyCreateDto } from './models/company.model';
 import { Employee, EmployeeCreateDto } from './models/employee.model';
@@ -6,6 +5,8 @@ import { Employee, EmployeeCreateDto } from './models/employee.model';
 @Injectable({
   providedIn: 'root',
 })
+
+// Service for CRUD operations on IndexedDB
 export class IndexedDBService {
   private dbName = 'CaseStudyDB';
   private db: IDBDatabase | null = null;
@@ -14,6 +15,7 @@ export class IndexedDBService {
     this.openDB();
   }
 
+  // Open the IndexedDB database for employee and company data
   openDB(): Promise<void> {
     return new Promise((resolve, reject) => {
       const request = indexedDB.open(this.dbName, 1);
@@ -53,6 +55,7 @@ export class IndexedDBService {
     return transaction.objectStore(storeName);
   }
 
+  // CRUD operations for companies
   addCompany(company: CompanyCreateDto): Promise<void> {
     return new Promise((resolve, reject) => {
       const store = this.getObjectStore('companies', 'readwrite');
@@ -120,6 +123,8 @@ export class IndexedDBService {
     });
   }
 
+
+  // CRUD operations for employees
   addEmployee(employee: EmployeeCreateDto): Promise<void> {
     return new Promise((resolve, reject) => {
       const store = this.getObjectStore('employees', 'readwrite');
@@ -153,7 +158,7 @@ export class IndexedDBService {
     });
   }
 
-  updateEmployee(employee: { id: number; name: string; company_id: number }): Promise<void> {
+  updateEmployee(employee: Employee): Promise<void> {
     return new Promise((resolve, reject) => {
       const store = this.getObjectStore('employees', 'readwrite');
       const request = store.put(employee);
