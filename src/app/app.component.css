@@ -1,26 +1,103 @@
-.welcome-container {
-    text-align: center;
-    margin-top: 2em;
-  }
-  
-  button {
-    padding: 0.5em 1em;
-    font-size: 16px;
-    cursor: pointer;
-    background-color: #007bff;
-    color: #ffffff;
-    border: none;
-    border-radius: 4px;
-    transition: background-color 0.3s;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
+/* Genel ayarlar */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  .login-form {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  font-family: Arial, sans-serif;
+}
+
+/* Ana konteyner */
+.container {
+  width: 80%; /* Tüm genişlikten %80 oranında olacak */
+  max-width: 600px; /* Maksimum genişlik */
+  margin: 0 auto; /* Sağdan ve soldan otomatik boşluk */
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  text-align: center; /* İçeriği ortalama */
+}
+
+/* Welcome kısmı */
+.welcome-container {
+  padding: 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.welcome-container h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.welcome-container p {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+/* Butonlar */
+button {
+  padding: 10px 20px;
+  font-size: 14px;
+  cursor: pointer;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0px 4px 8px rgba(0, 123, 255, 0.3);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin: 10px 0; /* Butonlar arasında boşluk */
+}
+
+button:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+button:active {
+  transform: translateY(0);
+  box-shadow: 0px 2px 4px rgba(0, 123, 255, 0.3);
+}
+
+/* Content (Companies ve Employees bölümü) */
+.content {
+  margin-top: 20px;
+}
+
+.section {
+  margin-bottom: 20px;
+}
+
+/* Listeleme alanı */
+.list {
+  margin-top: 10px;
+}
+
+.list h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.list ul {
+  list-style-type: none;
+  padding: 0;
+  text-align: left; /* Liste elemanlarını sola hizala */
+}
+
+.list li {
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+}
+
+.list li:last-child {
+  border-bottom: none;
+}
