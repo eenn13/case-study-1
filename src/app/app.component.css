@@ -14,28 +14,23 @@ body {
   font-family: Arial, sans-serif;
 }
 
-/* Ana konteyner */
+/* Main container */
 .container {
-  /* width: 80%;  Tüm genişlikten %80 oranında olacak */
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 100%; /* Tüm genişlik */
-  /*height: 100vh;*/
-  max-width: 100%; /* Maksimum genişlik */
-  margin: 0 auto; /* Sağdan ve soldan otomatik boşluk */
-  /* padding: 20px; */
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
   background-color: #0c3867;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-  text-align: center; /* İçeriği ortalama */
+  text-align: center;
 }
 
-/* Welcome kısmı */
+/* Welcome screen */
 .welcome-container {
   padding: 20px;
-  /*border: 1px solid white;*/
   display: flex;
-  /* background-image: url('assets/clock-tower.jpg'); */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -58,7 +53,7 @@ body {
   margin-bottom: 20px;
 }
 
-/* Butonlar */
+/* Buttons */
 button {
   padding: 10px 20px;
   font-size: 14px;
@@ -83,7 +78,7 @@ button:active {
 }
 
 
-/* Content (Companies ve Employees bölümü) */
+/* Content (Companies ve Employees) */
 .content {
   height: 100vh;
   min-height: 100vh;
@@ -93,6 +88,7 @@ button:active {
   justify-content: space-evenly;
 }
 
+/*Adding companies or employes areas*/
 .manager-div {
   width: 40%;
   display: flex;
@@ -119,6 +115,16 @@ button:active {
   box-sizing: border-box;
 }
 
+.company-section {
+  position: relative;
+}
+
+.company-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .employee-form {
   margin-top: 20px;
   display: flex;
@@ -142,17 +148,6 @@ button:active {
   box-sizing: border-box;
 }
 
-/* Company modal css */
-.company-section {
-  position: relative;
-}
-
-.company-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
 .header-icons {
   display: flex;
   gap: 8px; /* Adds space between icons */
@@ -167,15 +162,6 @@ button:active {
   cursor: pointer;
 }
 
-
-/* .info-icon {
-  font-size: 18px; 
-  margin-left: 8px;
-  color: #007bff;
-  cursor: pointer;
-  transition: color 0.3s;
-} */
-
 .info-icon:hover {
   color: #0056b3; /* Darker blue for hover */
 }
@@ -184,17 +170,9 @@ button:active {
   color: #7c5f06;
 }
 
-/* .delete-icon {
-  margin-left: 8px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: color 0.3s;
-} */
-
 .delete-icon:hover {
   color: #b02a37;
 }
-
 
 .employee-item {
   display: flex;
@@ -219,7 +197,6 @@ button:active {
   font-size: 16px;
   transition: color 0.3s;
 }
-
 
 .modal {
   position: fixed;
@@ -441,21 +418,12 @@ hr {
   min-height: 100vh;
   overflow: auto;
 }
-/* .buttons-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
-  .action-button {
-    margin: 0 10px;
-  }
-} */
 
 .section {
   margin-bottom: 20px;
 }
 
-/* Listeleme alanı */
+/* Styles for Listing */
 .list {
   margin-top: 10px;
 }
@@ -468,7 +436,7 @@ hr {
 .list ul {
   list-style-type: none;
   padding: 0;
-  text-align: left; /* Liste elemanlarını sola hizala */
+  text-align: left;
 }
 
 .list li {
@@ -481,7 +449,7 @@ hr {
   border-bottom: none;
 }
 
-/* Company Bölümü */
+/* Styles for Company cards */
 .company-section {
   margin-top: 20px;
   text-align: left;
@@ -502,13 +470,7 @@ hr {
   border: 1px solid black;
 }
 
-/*
-.employee-list li {
-  padding: 8px;
-  border-bottom: 1px solid #ddd;
-}
-*/
-
+/* Styles for Employee cards */
 .employee-list {
   margin-left: 20px;
   padding: 10px;
