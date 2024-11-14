@@ -16,18 +16,18 @@ export class AppComponent {
   constructor(private authService: AuthService, private indexedDBService: IndexedDBService) {}
   title = 'case-study-1';
   welcomeVisible: boolean = false;
-  users: any[] = [];
+  companies: any[] = [];
+  employees: any[] = [];
 
   ngOnInit() {
-    // authCode durumunu dinleyerek welcomeVisible değişkenini güncelle ve yetkilendirme sağlanınca getUsers çağır
     this.authService.authCode$.subscribe((isAuthenticated) => {
       this.welcomeVisible = !isAuthenticated;
   
       if (isAuthenticated) {
-        // Yetkilendirme sağlanınca veritabanını aç ve kullanıcıları getir
         this.indexedDBService.openDB()
           .then(() => {
-            this.getUsers();
+            this.getCompanies();
+            this.getEmployees();
           })
           .catch(() => {
             console.error('Failed to open database');
@@ -47,16 +47,29 @@ export class AppComponent {
     await this.authService.loginWithGoogle();
   }
 
-  addUser() {
-    this.indexedDBService.addUser({ name: 'Alice', age: 25 }).then(() => {
-      console.log('User added');
+  addCompany() {
+    this.indexedDBService.addCompany({ name: 'companyx', address: "izmir buca", tel:"+90538" }).then(() => {
+      console.log('Company added');
     });
   }
 
-  getUsers() {
-    this.indexedDBService.getAllUsers().then((users) => {
-      this.users = users;
-      console.log('Users:', users);
+  getCompanies() {
+    this.indexedDBService.getAllCompanies().then((companies) => {
+      this.companies = companies;
+      console.log('Companies:', companies);
+    });
+  }
+
+  addEmployee() {
+    this.indexedDBService.addEmployee({ name: 'employee1', company_id: 1 }).then(() => {
+      console.log('Employee added');
+    });
+  }
+
+  getEmployees() {
+    this.indexedDBService.getAllEmployees().then((employees) => {
+      this.employees = employees;
+      console.log('Employees:', employees);
     });
   }
 }

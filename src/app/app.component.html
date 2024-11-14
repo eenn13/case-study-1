@@ -5,13 +5,23 @@
   <button (click)="getAuth()">Go to Login</button>
 </main>
 <div *ngIf="!welcomeVisible">
-  <button (click)="addUser()">Add User</button>
-  <button (click)="getUsers()">Get Users</button>
+  <button (click)="addCompany()">Add Company</button>
+  <button (click)="getCompanies()">Get Companies</button>
   <div>
-    <h2>Users List</h2>
+    <h2>Company List</h2>
     <ul>
-      <li *ngFor="let user of users">
-        ID: {{ user.id }} - Name: {{ user.name }} - Age: {{ user.age }}
+      <li *ngFor="let company of companies">
+        ID: {{ company.id }} - Name: {{ company.name }} - Age: {{ company.address }}
+      </li>
+    </ul>
+  </div>
+  <button (click)="addEmployee()">Add Employee</button>
+  <button (click)="getEmployees()">Get Employee</button>
+  <div>
+    <h2>Employee List</h2>
+    <ul>
+      <li *ngFor="let employee of employees">
+        ID: {{ employee.id }} - Name: {{ employee.name }} - Company: {{ employee.company_id }}
       </li>
     </ul>
   </div>

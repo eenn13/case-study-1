@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class IndexedDBService {
-  private dbName = 'MyDatabase';
+  private dbName = 'CaseStudyDB';
   private db: IDBDatabase | null = null;
 
   constructor() {
@@ -18,8 +18,17 @@ export class IndexedDBService {
   
       request.onupgradeneeded = (event: IDBVersionChangeEvent) => {
         const db = request.result;
-        if (!db.objectStoreNames.contains('users')) {
-          db.createObjectStore('users', { keyPath: 'id', autoIncrement: true });
+  
+        // Companies tablosunu oluştur
+        if (!db.objectStoreNames.contains('companies')) {
+          db.createObjectStore('companies', { keyPath: 'id', autoIncrement: true });
+        }
+  
+        // Employees tablosunu oluştur ve company_id alanı ekle
+        if (!db.objectStoreNames.contains('employees')) {
+          const employeeStore = db.createObjectStore('employees', { keyPath: 'id', autoIncrement: true });
+          employeeStore.createIndex('company_id', 'company_id', { unique: false });
+          employeeStore.createIndex('name', 'name', { unique: false }); // İsim alanı üzerinde indeks
         }
       };
   
@@ -35,7 +44,6 @@ export class IndexedDBService {
       };
     });
   }
-  
 
   // Utility method to get a transaction
   private getObjectStore(storeName: string, mode: IDBTransactionMode): IDBObjectStore {
@@ -43,26 +51,26 @@ export class IndexedDBService {
     return transaction.objectStore(storeName);
   }
 
-  addUser(user: { name: string; age: number }): Promise<void> {
+  addCompany(company: { name: string; address: string, tel: string }): Promise<void> {
     return new Promise((resolve, reject) => {
-      const store = this.getObjectStore('users', 'readwrite');
-      const request = store.add(user);
+      const store = this.getObjectStore('companies', 'readwrite');
+      const request = store.add(company);
   
       request.onsuccess = () => {
-        console.log('User added to IndexedDB');
+        console.log('Company added to IndexedDB');
         resolve();
       };
   
       request.onerror = () => {
-        console.error('Error adding user to IndexedDB');
+        console.error('Error adding company to IndexedDB');
         reject();
       };
     });
   }
 
-  getAllUsers(): Promise<any[]> {
+  getAllCompanies(): Promise<any[]> {
     return new Promise((resolve, reject) => {
-      const store = this.getObjectStore('users', 'readonly');
+      const store = this.getObjectStore('companies', 'readonly');
       const request = store.getAll();
   
       request.onsuccess = () => {
@@ -70,46 +78,110 @@ export class IndexedDBService {
       };
   
       request.onerror = () => {
-        console.error('Error fetching users from IndexedDB');
+        console.error('Error fetching companies from IndexedDB');
         reject();
       };
     });
   }
   
-  updateUser(user: { id: number; name: string; age: number }): Promise<void> {
+  updateCompany(company: { id: number; name: string; address: string, tel: string }): Promise<void> {
     return new Promise((resolve, reject) => {
-      const store = this.getObjectStore('users', 'readwrite');
-      const request = store.put(user);
+      const store = this.getObjectStore('companies', 'readwrite');
+      const request = store.put(company);
   
       request.onsuccess = () => {
-        console.log('User updated in IndexedDB');
+        console.log('Company updated in IndexedDB');
         resolve();
       };
   
       request.onerror = () => {
-        console.error('Error updating user in IndexedDB');
+        console.error('Error updating company in IndexedDB');
         reject();
       };
     });
   }
 
-  deleteUser(id: number): Promise<void> {
+  deleteCompany(id: number): Promise<void> {
     return new Promise((resolve, reject) => {
-      const store = this.getObjectStore('users', 'readwrite');
+      const store = this.getObjectStore('companies', 'readwrite');
       const request = store.delete(id);
   
       request.onsuccess = () => {
-        console.log('User deleted from IndexedDB');
+        console.log('Company deleted from IndexedDB');
         resolve();
       };
   
       request.onerror = () => {
-        console.error('Error deleting user from IndexedDB');
+        console.error('Error deleting company from IndexedDB');
         reject();
       };
     });
   }
+
+  addEmployee(employee: { name: string; company_id: number }): Promise<void> {
+    return new Promise((resolve, reject) => {
+      const store = this.getObjectStore('employees', 'readwrite');
+      const request = store.add(employee);
   
+      request.onsuccess = () => {
+        console.log('Employee added to IndexedDB');
+        resolve();
+      };
   
+      request.onerror = () => {
+        console.error('Error adding employee to IndexedDB');
+        reject();
+      };
+    });
+  }
+
+  getAllEmployees(): Promise<any[]> {
+    return new Promise((resolve, reject) => {
+      const store = this.getObjectStore('employees', 'readonly');
+      const request = store.getAll();
   
+      request.onsuccess = () => {
+        resolve(request.result);
+      };
+  
+      request.onerror = () => {
+        console.error('Error fetching employees from IndexedDB');
+        reject();
+      };
+    });
+  }
+
+  updateEmployee(employee: { id: number; name: string; company_id: number }): Promise<void> {
+    return new Promise((resolve, reject) => {
+      const store = this.getObjectStore('employees', 'readwrite');
+      const request = store.put(employee);
+  
+      request.onsuccess = () => {
+        console.log('Employee updated in IndexedDB');
+        resolve();
+      };
+  
+      request.onerror = () => {
+        console.error('Error updating employee in IndexedDB');
+        reject();
+      };
+    });
+  }
+
+  deleteEmployee(id: number): Promise<void> {
+    return new Promise((resolve, reject) => {
+      const store = this.getObjectStore('employees', 'readwrite');
+      const request = store.delete(id);
+  
+      request.onsuccess = () => {
+        console.log('Employee deleted from IndexedDB');
+        resolve();
+      };
+  
+      request.onerror = () => {
+        console.error('Error deleting employee from IndexedDB');
+        reject();
+      };
+    });
+  }
 }
