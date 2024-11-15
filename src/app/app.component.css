@@ -125,6 +125,10 @@ button:active {
   justify-content: space-between;
 }
 
+.company-header.no-employees {
+  background-color: #b0d1ff; /* Different color for companies with no employees */
+}
+
 .employee-form {
   margin-top: 20px;
   display: flex;

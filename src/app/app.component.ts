@@ -62,7 +62,7 @@ export class AppComponent {
   isEmployeeModalOpen = false;    //Modal opener for read or edit employee
   selectedEmployee: any = null;   //Selected employee for modal
   //ENDREGION
-
+  
   async getAuth() { //Get authentication
     // Comment out if you don't want to use cookies
 
@@ -98,7 +98,6 @@ export class AppComponent {
   getCompanies() {
     this.indexedDBService.getAllCompanies().then((companies) => {
       this.companies = companies;
-      console.log('Companies:', companies);
     });
   }
 
@@ -168,7 +167,6 @@ export class AppComponent {
   getEmployees() {
     this.indexedDBService.getAllEmployees().then((employees) => {
       this.employees = employees;
-      console.log('Employees:', employees);
     });
   }
 

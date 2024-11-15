@@ -11,9 +11,10 @@ export class IndexedDBService {
   private dbName = 'CaseStudyDB';
   private db: IDBDatabase | null = null;
 
-  constructor() {
-    this.openDB();
-  }
+  // openDB after authentication not in constructor
+  // constructor() {
+  //   this.openDB();
+  // }
 
   // Open the IndexedDB database for employee and company data
   openDB(): Promise<void> {
