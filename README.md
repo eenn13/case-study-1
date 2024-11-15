@@ -1,29 +1,23 @@
-# CaseStudy1
+# Case study for Kentkart Hiring process
+# Prepared by Eren Türkel, 14.11.2024
 
-- Therefore, pay attention not only to the opening of the pages or the functioning of the given functions, 
-but also to the high level of visualization.
+# Welcome Screen
+- The screen where the user can go to himself instead of opening the application directly
+- You should log in with Gmail by pressing the Access to application button
 
-- It is more important to show how you write (in your eyes) a maintainable application. Be prepared to 
-explain the steps you took in a review of this test.
+# Logging with Gmail
+- Google OAuth service used for login in auth.service.ts
+- URL for auth-callback.component is already given to Google service. Google is going to redirect you to auth-callback
+- After you logged in with Google service, you will be redirected to application by auth-callback.component
 
-- Don't forget to add the necessary documentations and simple example tests.
+# Application
+- After authentication you can create companies and their employees from collapsible forms
+- In the middle of the screen, companies are listed and under the companies, employees are listed.
+- Details of companies and their employees can be read, updated and deleted from the relevant icons on them.
 
-Rules
-- You can use any libraries / frameworks that make your life easier, but strictly speaking they are not
-necessary. 
-- We are more interested in seeing how you would structure things.
-
-- Your application should run on the latest public version of Google Chrome. You don't have to worry
-about making your code work on any other browser, as such you are free to use anything that is
-supported by Chrome and not worry about cross-browser implementations.
-
-
-- User logins must be provided by logging in with Gmail.
-- Routing with authentication middleware IndexedDB (client-side storage), which contains "employees" and "companies" tables, will be
-used.
-- Employee and company listing pages will be viewable by all users Only logged in users will be able to add, edit and delete employees and companies.
-- The logged in user must be able to define one or more employees for a company.
-For interface design, you can use a ready-made template or create your own. We take care that
-your html, css and js codes are attentive.
-
-- Do not forget to create readme and documentation for your project
+# Future Tasks
+- Search feature can be added
+- Sorting by number of employees
+- Displaying the number of employees on the card
+- Various sorting options
+- Uploading images
