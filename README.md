@@ -14,6 +14,7 @@
 - After authentication you can create companies and their employees from collapsible forms
 - In the middle of the screen, companies are listed and under the companies, employees are listed.
 - Details of companies and their employees can be read, updated and deleted from the relevant icons on them.
+- Companies with no employees are colored more dull
 
 # Future Tasks
 - Search feature can be added
