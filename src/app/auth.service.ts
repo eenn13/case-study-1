@@ -15,7 +15,9 @@ export class AuthService {
 
   // Setter
   setAuthCode(value: string): void {
-    this.authCode.next(value);
+    setTimeout(() => { // Delay to ensure the value is set after the redirect
+      this.authCode.next(value);
+    }, 0);  //Error fix for ExpressionChangedAfterItHasBeenCheckedError: Expression has changed after it was checked
   }
 
   loginWithGoogle() {
