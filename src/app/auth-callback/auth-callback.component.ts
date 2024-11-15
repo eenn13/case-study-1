@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
+//import { Cookie } from 'ng2-cookies/ng2-cookies';
 
 @Component({
   selector: 'app-auth-callback',
@@ -21,7 +21,7 @@ export class AuthCallbackComponent implements OnInit {
 
     if (code) {
       this.authService.setAuthCode(code);
-      Cookie.set('authProvided', 'true', 1 /*days from now*/);
+      //Cookie.set('authProvided', 'true', 1 /*days from now*/);
     } else {
       this.authService.setAuthCode("");
     }
